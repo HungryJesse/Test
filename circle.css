@@ -1,0 +1,84 @@
+$circle-size: 100px;
+$circle-stroke-color: #2c3650;
+$circle-radius: 45;
+
+@function get-dash-value($radius, $percentage) {
+  // Using $radius, calculate circumference.
+  $circumference: 2 * 3.1415927 * $radius;
+  
+  // Convert percentage to decimal.
+  // i.e. 50% = 0.5.
+  $percentage-as-decimal: $percentage / 100%;
+  
+  // Return unit value.
+  @return $circumference * $percentage-as-decimal;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #fff;
+}
+
+.circle {
+  height: $circle-size;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  width: $circle-size;
+}
+
+.circle__svg {
+  animation: 2s linear infinite both circle__svg;
+}
+
+@keyframes circle__svg {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(0deg)
+  }
+}
+
+.circle__svg-circle {
+  animation: 1.4s ease-in-out infinite both circle__svg-circle;
+  fill: transparent;
+  stroke: $circle-stroke-color;
+  stroke-dasharray: get-dash-value($circle-radius, 100%);
+  stroke-linecap: butt;
+  stroke-width: 25;
+  transform-origin: 50% 50%;
+}
+
+@keyframes circle__svg-circle {
+  0% {
+    stroke-dashoffset: get-dash-value($circle-radius, 100%);
+    transform: rotate(0);
+  }
+  
+   25% {
+    stroke-dashoffset: get-dash-value($circle-radius, 50%);
+    transform: rotate(0);
+  }
+  
+  50% {
+    stroke-dashoffset: get-dash-value($circle-radius, 100%);
+    transform: rotate(180deg);
+  }
+  
+   75% {
+    stroke-dashoffset: get-dash-value($circle-radius, 50%);
+    transform: rotate(180deg);
+  }
+  
+  100% {
+    stroke-dashoffset: get-dash-value($circle-radius, 100%);
+    transform: rotate(360deg);
+  }
+}
